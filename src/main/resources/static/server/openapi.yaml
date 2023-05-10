@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: AWS Tester API
+  description: Api for AWS tester frontend
+tags:
+  - name: Authentication
+    description: "Authentication Operations"
+paths:
+  /api/v1/auth/signup:
+    post:
+      tags:
+        - Authentication
+      operationId: "signUp"
+      description: Sign up endpoint
+      requestBody:
+        description: "Object containing information about user"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        '201':
+          description: Successful response
+        '500':
+          description: Server error
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Authentication
+      operationId: "login"
+      description: Login endpoint
+      requestBody:
+        description: "Object containing login information about user"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        '200':
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/LoginResponse'
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        authenticationToken:
+          type: string
+        expiresAt:
+          type: string
+        issuedAt:
+          type: string
+        username:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
